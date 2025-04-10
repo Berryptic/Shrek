@@ -3,16 +3,40 @@
 //SP NEW TESSSTTT
 // KM's first change
 
-// the setup function runs once when you press reset or power the board
+
+//SERVO WITH BUTTON TEST//---------------------------------------
+#include <Servo.h>
+
+Servo myservo;
+const int buttonPin = 8;
+int buttonState = 0;
+int previousButtonState = 0;
+bool servoPosition = false; // Track position: false = 0°, true = 90°
+
 void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
-  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(buttonPin, INPUT);
+  myservo.attach(9);
+  myservo.write(0); // Start at 0 degrees
+  Serial.begin(9600); // Initialize serial communication
 }
 
-// the loop function runs over and over again forever
 void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(1000);                      // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
-  delay(1000);                      // wait for a second
+  buttonState = digitalRead(buttonPin);
+
+  // Check if button state has changed from LOW to HIGH (button press)
+  if (buttonState == HIGH && previousButtonState == LOW) {
+    Serial.println("Button pressed");
+
+    // Toggle the servo position
+    if (servoPosition) {
+      myservo.write(0); // Move back to 0°
+    } else {
+      myservo.write(90); // Move to 90°
+    }
+
+    servoPosition = !servoPosition; // Flip the state
+    delay(300); // Simple debounce delay
+  }
+
+  previousButtonState = buttonState; // Update the previous state
 }
