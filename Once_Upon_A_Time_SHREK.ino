@@ -4,11 +4,11 @@
 // KM's first change
 
 
-//SERVO WITH BUTTON TEST//---------------------------------------
+//SERVO WITH COPPER WIRE TEST//---------------------------------------
 #include <Servo.h>
 
 Servo myservo;
-const int buttonPin = 8;
+const int buttonPin = 7;
 int buttonState = 0;
 int previousButtonState = 0;
 bool servoPosition = false; // Track position: false = 0°, true = 90°
